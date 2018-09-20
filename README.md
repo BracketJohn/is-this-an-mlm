@@ -1,23 +1,7 @@
 # is-this-an-mlm
 
-> Website that tells people whether a company is an MLM Scheme.
+Website to tell people whether a company is an MLM.
 
-## Build Setup
+## MLMs
 
-``` bash
-# install dependencies
-$ npm install # Or yarn install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
+See the [index](pages/index.vue) fir a list of all recognized MLMs. Feel free to add/make corrections via a pull request. Original list was adapted from [r/antiMLM](https://old.reddit.com/r/antiMLM/comments/9aolhe/is_an_mlm_check_here_mega_thread_list/?utm_content=title&utm_medium=hot&utm_source=reddit&utm_name=antiMLM).
