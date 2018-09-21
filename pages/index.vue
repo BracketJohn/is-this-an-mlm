@@ -4,8 +4,8 @@
       <div class="hero-body">
       <div class="container">
 
-        <div class="columns is-flex is-fullheight">
-          <div class="column has-text-right">
+        <div class="columns">
+          <div class="column has-text-right has-text-centered-mobile">
             <p class="is-size-3">
               Is
             </p>
@@ -26,11 +26,11 @@
               </div>
             </div>
             <div v-else>
-              <h1 class="is-size-4">Please type in a company name!</h1>
+              <h1 class="is-size-4 is-size-6-mobile">Please type in a company name!</h1>
             </div>
 
           </div>
-          <div class="column has-text-left has-text-centered">
+          <div class="column has-text-left has-text-centered has-text-centered-mobile">
             <p class="is-size-3">
             an MLM?
             </p>
