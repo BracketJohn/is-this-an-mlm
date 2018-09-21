@@ -1,6 +1,6 @@
 # is-this-an-mlm
 
-Website to tell people whether a company is an MLM.
+[Website](www.isthisanmlm.com) to tell people whether a company is an MLM.
 
 ## MLMs
 
