@@ -13,3 +13,5 @@ dist
 # VS Code
 .editorconfig
 
+# python
+__pycache__
