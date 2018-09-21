@@ -22,6 +22,7 @@ module.exports = {
   */
   modules: [
     'nuxt-buefy',
+    '@nuxtjs/axios',
     ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
   /*
