@@ -28,8 +28,12 @@
                 <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="http://www.pinktruth.com/">Pink truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
               </div>
               <div v-else>
-                <p class="is-size-5">
-                  <span v-if="getSimilarCompanyNames">Perhaps you meant: {{ getSimilarCompanyNames }}?</span>
+                <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
+                  <span>Perhaps you meant:
+                    <a v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
+                      <span @click="companyName = cn">{{ cn }}</span><span v-if="index < getSimilarCompanyNames.length - 1">, </span>
+                    </a>?
+                  </span>
                 </p>
               </div>
             </div>
@@ -95,7 +99,7 @@ export default {
             });
           } else {
             self.$toast.open({
-                message: `Too many suggestions!.`,
+                message: `Too many suggestions!`,
                 type: 'is-danger'
             });
           }
@@ -128,7 +132,7 @@ export default {
         if (compOne.distance > compTwo.distance)
           return 1;
         return 0;
-      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name).join(', ');
+      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name);
     }
   },
   data: function() {
