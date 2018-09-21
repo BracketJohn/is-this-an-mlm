@@ -23,6 +23,7 @@ module.exports = {
   modules: [
     'nuxt-buefy',
     '@nuxtjs/axios',
+    'nuxt-clipboard2',
     ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
   /*
@@ -44,7 +45,11 @@ module.exports = {
     }
   },
   env: {
-    apiUrl: process.env.API_URL || 'http://localhost:8080'
+    apiUrl: process.env.API_URL || 'http://localhost:8080',
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
+  generate: {
+    fallback: true,
   }
 }
 
