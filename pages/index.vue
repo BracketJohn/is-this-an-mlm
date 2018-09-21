@@ -16,8 +16,14 @@
             </b-field>
 
             <div v-if="companyName">
-              <h1 v-if="isMlm" class="is-size-2 has-text-danger">Yes</h1>
-              <h1 v-else class="is-size-2 has-text-success">No</h1>
+              <div v-if="isMlm">
+                <h1 class="is-size-2 has-text-danger">Yes!</h1>
+                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="http://www.pinktruth.com/">Pink truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
+              </div>
+              <div v-else>
+                <h1 class="is-size-2 has-text-success">No!</h1>
+                <h2 v-if="getSimilarCompanyNames">Maybe you meant: {{ getSimilarCompanyNames }}?</h2>
+              </div>
             </div>
             <div v-else>
               <h1 class="is-size-4">Please type in a company name!</h1>
@@ -45,7 +51,6 @@ const levenshtein = require('fast-levenshtein');
 export default {
   computed: {
     isMlm() {
-      console.log(levenshtein.get('a', 'b'));
       return this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
     },
     getSimilarCompanyNames() {
@@ -63,7 +68,7 @@ export default {
         if (compOne.distance > compTwo.distance)
           return 1;
         return 0;
-      }).slice(0, 1).filter(comp => comp.distance < 5).map(comp => comp.name).join(', ');
+      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name).join(', ');
     }
   },
   data: function() {
