@@ -22,7 +22,7 @@
               </div>
               <div v-else>
                 <h1 class="is-size-2 has-text-success">No!</h1>
-                <h2 v-if="getSimilarCompanyNames">Maybe you meant: {{ getSimilarCompanyNames }}?</h2>
+                <h2 v-if="getSimilarCompanyNames">Perhaps you meant: {{ getSimilarCompanyNames }}?</h2>
               </div>
             </div>
             <div v-else>
@@ -40,7 +40,7 @@
       </div>
       </div>
 
-  </section >
+  </section>
 
 
 </template>
