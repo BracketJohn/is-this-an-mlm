@@ -1,3 +1,6 @@
+# mac
+.DS_Store
+
 # dependencies
 node_modules
 
@@ -13,3 +16,8 @@ dist
 # VS Code
 .editorconfig
 
+# python
+__pycache__
+
+# suggestions
+suggestion.log

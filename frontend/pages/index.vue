@@ -1,54 +1,142 @@
 <template>
 
-  <section class="hero is-fullheight">
+  <div>
+    <!-- Main Page Content. -->
+    <section class="hero">
       <div class="hero-body">
-      <div class="container">
 
-        <div class="columns">
-          <div class="column has-text-right has-text-centered-mobile">
-            <p class="is-size-3">
-              Is
-            </p>
+        <div class="columns is-multiline">
+          <div class="column is-one-third has-text-right has-text-centered-mobile">
+            <p class="is-size-3">Is</p>
           </div>
-          <div class="column has-text-centered">
+          <div class="column is-one-third has-text-centered">
             <b-field>
               <b-input size="is-large" placeholder="Company Name" v-model="companyName" rounded></b-input>
             </b-field>
+          </div>
+          <div class="column has-text-left has-text-centered-mobile is-one-third">
+            <p class="is-size-3">an MLM?</p>
+          </div>
+        </div>
+        <!-- Second row - Yes/No text -->
+        <div class="columns">
+          <div class="column has-text-centered">
 
             <div v-if="companyName">
               <div v-if="isMlm">
                 <h1 class="is-size-2 has-text-danger">Yes!</h1>
-                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="http://www.pinktruth.com/">Pink truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
+                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="https://mlmtruth.org/">MLM Truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
               </div>
               <div v-else>
-                <h1 class="is-size-2 has-text-success">No!</h1>
-                <h2 v-if="getSimilarCompanyNames">Perhaps you meant: {{ getSimilarCompanyNames }}?</h2>
+                <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
+                  <span>Perhaps you meant:
+                    <nuxt-link :to="cn" v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
+                      <span @click="companyName = cn">{{ cn }}</span>
+                      <span v-if="index < getSimilarCompanyNames.length - 1">, </span>
+                    </nuxt-link>?
+                  </span>
+                </p>
               </div>
             </div>
-            <div v-else>
-              <h1 class="is-size-4 is-size-6-mobile">Please type in a company name!</h1>
+            <div v-else class="column has-text-centered">
+              <p class="is-size-4 is-size-6-mobile">Please type in a company name!</p>
             </div>
 
           </div>
-          <div class="column has-text-left has-text-centered has-text-centered-mobile">
-            <p class="is-size-3">
-            an MLM?
-            </p>
+        </div>
+        <!-- Third row - Add new MLM Text -->
+        <div class="columns">
+          <div class="column has-text-centered">
+
+            <div class="columns">
+              <div class="column has-text-centered is-size-6"  v-if="companyName && !isMlm">
+                Is this a new MLM you would like to add?
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Fourth row - Add new MLM Button -->
+        <div class="columns">
+          <div class="column has-text-centered">
+
+            <div class="columns">
+              <div class="column has-text-centered">
+                <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
+                  Add "{{ companyName }}"
+                </button>
+                <div v-else-if="isMlm">
+                    <button @click="copyUrlToClipboard" class="button is-primary is-medium">
+                      Share Link
+                    </button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
       </div>
-      </div>
+    </section>
+    <section>
 
-  </section>
+    </section>
 
+  </div>
 
 </template>
 
 <script>
 const levenshtein = require('fast-levenshtein');
+import axios from 'axios';
 
 export default {
+  methods: {
+    copyUrlToClipboard() {
+      let urlToCopy = `${process.env.baseUrl}/${this.companyName}`;
+      let self = this;
+
+      this.$router.replace(this.companyName);
+      this.$copyText(urlToCopy)
+        .then(function (response) {
+          self.$toast.open({
+              message: `Copied link to clipboard!`,
+              type: 'is-success'
+          });
+        })
+        .catch(function (error) {
+          self.$toast.open({
+              message: `Failed to copy link to clipboard!`,
+              type: 'is-danger'
+          });
+        });
+    },
+    suggestMlm() {
+      let self = this;
+      let compName = this.companyName;
+      axios.get(`${process.env.apiUrl}/${compName}`)
+        .then(function (response) {
+          if (response.data.status == 'success') {
+            self.$toast.open({
+                message: `"${compName}" was suggested!`,
+                type: 'is-success'
+            });
+          } else {
+            self.$toast.open({
+                message: `Too many suggestions!`,
+                type: 'is-danger'
+            });
+          }
+        })
+        .catch(function (error) {
+          self.$toast.open({
+              message: `Suggestion service is down.`,
+              type: 'is-danger'
+          });
+        });
+      this.companyName = '';
+    },
+  },
   computed: {
     isMlm() {
       return this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
@@ -68,11 +156,12 @@ export default {
         if (compOne.distance > compTwo.distance)
           return 1;
         return 0;
-      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name).join(', ');
+      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name);
     }
   },
   data: function() {
     return {
+      showSuggestionModal: false,
       companyName: '',
       knownMlms: [
         'premier jewelry',
@@ -623,7 +712,8 @@ export default {
         'zrii',
         'zurvita',
         'zyia',
-        'zyn']
+        'zyn'
+      ],
     }
   },
 }

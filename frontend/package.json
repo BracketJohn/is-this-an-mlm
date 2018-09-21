@@ -13,9 +13,11 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.3.2",
     "fast-levenshtein": "^2.0.6",
     "nuxt": "^1.0.0",
-    "nuxt-buefy": "^0.2.3"
+    "nuxt-buefy": "^0.2.3",
+    "nuxt-clipboard2": "^0.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
