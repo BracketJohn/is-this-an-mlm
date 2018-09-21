@@ -15,3 +15,6 @@ dist
 
 # python
 __pycache__
+
+# suggestions
+suggestion.log
