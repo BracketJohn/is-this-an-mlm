@@ -371,6 +371,7 @@ export default {
         'marvelous mouse travels',
         'mary & martha',
         'marykay',
+        'mary kay',
         'maskara',
         'matilda jane',
         'max & madeleine',
