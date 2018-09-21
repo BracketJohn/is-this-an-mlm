@@ -14,6 +14,7 @@ Running this.
 1) frontend
 ```
 > cd frontend
+> npm install
 > npm run generate
 > http-server -p80 -d false dist
 ```
@@ -22,6 +23,7 @@ Substitute any http server you want.
 2) backend
 ```
 > cd backend
+> poetry install
 > poetry run python mlm_backend
 ```
 `poetry` must be installed for this.
