@@ -25,14 +25,15 @@
             <div v-if="companyName">
               <div v-if="isMlm">
                 <h1 class="is-size-2 has-text-danger">Yes!</h1>
-                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="http://www.pinktruth.com/">Pink truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
+                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="https://mlmtruth.org/">MLM Truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
               </div>
               <div v-else>
                 <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
                   <span>Perhaps you meant:
-                    <a v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
-                      <span @click="companyName = cn">{{ cn }}</span><span v-if="index < getSimilarCompanyNames.length - 1">, </span>
-                    </a>?
+                    <nuxt-link :to="cn" v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
+                      <span @click="companyName = cn">{{ cn }}</span>
+                      <span v-if="index < getSimilarCompanyNames.length - 1">, </span>
+                    </nuxt-link>?
                   </span>
                 </p>
               </div>
@@ -60,16 +61,20 @@
           <div class="column has-text-centered">
 
             <div class="columns">
-              <div class="column has-text-centered"  v-if="companyName && !isMlm">
-                <button class="button is-primary is-medium modal-button" @click="suggestMlm">
+              <div class="column has-text-centered">
+                <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
                   Add "{{ companyName }}"
                 </button>
+                <div v-else-if="isMlm">
+                    <button @click="copyUrlToClipboard" class="button is-primary is-medium">
+                      Share Link
+                    </button>
+                </div>
               </div>
             </div>
 
           </div>
         </div>
-
 
       </div>
     </section>
@@ -87,6 +92,25 @@ import axios from 'axios';
 
 export default {
   methods: {
+    copyUrlToClipboard() {
+      let urlToCopy = `${process.env.baseUrl}/${this.companyName}`;
+      let self = this;
+
+      this.$router.replace(this.companyName);
+      this.$copyText(urlToCopy)
+        .then(function (response) {
+          self.$toast.open({
+              message: `Copied link to clipboard!`,
+              type: 'is-success'
+          });
+        })
+        .catch(function (error) {
+          self.$toast.open({
+              message: `Failed to copy link to clipboard!`,
+              type: 'is-danger'
+          });
+        });
+    },
     suggestMlm() {
       let self = this;
       let compName = this.companyName;
