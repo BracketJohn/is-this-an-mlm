@@ -7,7 +7,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Website that tells people whether a company is an MLM Scheme. MLM stands for multi-level-marketing. MLM Schemes extorting money from vulnerable people that often see them as their only hope. The purpose of this page is to quickly inform users and outrank typical MLMs in Google search. MLM Schemes are also called Pyramid schemes.' }
+      { hid: 'description', name: 'description', content: 'Website that tells people whether a company is an MLM Scheme. MLM stands for multi-level-marketing. MLM Schemes extort money from vulnerable people.' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
