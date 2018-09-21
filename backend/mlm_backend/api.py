@@ -9,7 +9,6 @@ LAST_REQUEST = {}
 
 def submit_mlm(request):
 
-
     requester = request.remote
     suggestion = request.match_info['name']
     last_request, now = LAST_REQUEST.get(requester), datetime.now(tz=timezone.utc)

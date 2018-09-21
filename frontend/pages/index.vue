@@ -86,7 +86,7 @@ export default {
     suggestMlm() {
       let self = this;
       let compName = this.companyName;
-      axios.get(`http://localhost:8080/mlms/${compName}`)
+      axios.get(`${process.env.apiUrl}/${compName}`)
         .then(function (response) {
           if (response.data.status == 'success') {
             self.$toast.open({
