@@ -78,6 +78,7 @@ export default {
         'cutco',
         'vector',
         '31',
+        'thirty one',
         '5linx',
         'abby & anna',
         'acan pacific',
