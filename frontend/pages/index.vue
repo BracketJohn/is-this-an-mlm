@@ -88,15 +88,21 @@ export default {
       let compName = this.companyName;
       axios.get(`http://localhost:8080/mlms/${compName}`)
         .then(function (response) {
-          self.$toast.open({
-              message: `"${compName}" was suggested!`,
-              type: 'is-success'
-          });
+          if (response.data.status == 'success') {
+            self.$toast.open({
+                message: `"${compName}" was suggested!`,
+                type: 'is-success'
+            });
+          } else {
+            self.$toast.open({
+                message: `Too many suggestions!.`,
+                type: 'is-danger'
+            });
+          }
         })
         .catch(function (error) {
-          console.log(error);
           self.$toast.open({
-              message: `Too many suggestions! Try again soon.`,
+              message: `Suggestion service is down.`,
               type: 'is-danger'
           });
         });
