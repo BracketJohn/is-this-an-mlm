@@ -75,8 +75,9 @@ export default {
     return {
       companyName: '',
       knownMlms: [
-        'Premier Jewelry',
-        'Nutrilite',
+        'premier jewelry',
+        'premier designs',
+        'nutrilite',
         'cutco',
         'vector',
         '31',
