@@ -67,7 +67,7 @@
                 </button>
                 <div v-else-if="isMlm">
                     <button @click="copyUrlToClipboard" class="button is-primary is-medium">
-                      Share Link
+                      Copy Link
                     </button>
                 </div>
               </div>
