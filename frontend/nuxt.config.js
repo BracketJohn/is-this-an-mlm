@@ -45,8 +45,8 @@ module.exports = {
     }
   },
   env: {
-    apiUrl: process.env.API_URL || 'http://localhost:8080',
-    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+    apiUrl: process.env.API_URL || 'http://www.isthisanmlm.com:8080/mlms',
+    baseUrl: process.env.BASE_URL || 'http://www.isthisanmlm.com'
   },
   generate: {
     fallback: true,

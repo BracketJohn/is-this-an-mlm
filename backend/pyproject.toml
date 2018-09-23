@@ -5,7 +5,7 @@ description = ""
 authors = ["BracketJohn"]
 
 [tool.poetry.dependencies]
-python = "*"
+python = "3.6.5"
 aiohttp = "3.4.4"
 
 [tool.poetry.dev-dependencies]

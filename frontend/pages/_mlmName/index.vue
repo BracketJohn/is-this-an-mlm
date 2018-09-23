@@ -93,7 +93,7 @@ import axios from 'axios';
 export default {
   methods: {
     copyUrlToClipboard() {
-      let urlToCopy = `${process.env.baseUrl}/${this.companyName}`;
+      let urlToCopy = `${context.env.baseUrl}/${this.companyName}`;
       let self = this;
 
       this.$router.replace(this.companyName);
@@ -114,7 +114,7 @@ export default {
     suggestMlm() {
       let self = this;
       let compName = this.companyName;
-      axios.get(`${process.env.apiUrl}/${compName}`)
+      axios.get(`${context.env.apiUrl}/${compName}`)
         .then(function (response) {
           if (response.data.status == 'success') {
             self.$toast.open({
@@ -136,6 +136,16 @@ export default {
         });
       this.companyName = '';
     },
+  },
+  head () {
+    return {
+      title: `Is ${this.companyName} an MLM Scheme?`,
+      meta: [
+        { hid: '0', property: 'og:title', content: `Is ${this.companyName} an MLM Scheme?` },
+        { hid: '1', property: 'og:image', content: `${context.env.baseUrl}/yes.png` },
+        { hid: '2', property: 'og:description', content: `Is the company ${this.companyName} an MLM scheme? MLM schmes often prey on their members.` }
+      ]
+    }
   },
   computed: {
     isMlm() {

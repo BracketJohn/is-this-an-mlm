@@ -3,7 +3,7 @@ from os import environ
 
 from aiohttp import web
 
-ALLOWED_ORIGINS = environ.get('ALLOWED_ORIGINS', 'http://localhost:3000')
+ALLOWED_ORIGINS = environ.get('ALLOWED_ORIGINS', '*')
 SUGGESTION_LOGS = 'suggestion.log'
 LAST_REQUEST = {}
 
@@ -14,7 +14,7 @@ def submit_mlm(request):
     last_request, now = LAST_REQUEST.get(requester), datetime.now(tz=timezone.utc)
     LAST_REQUEST[requester] = now
 
-    if last_request and (now - last_request).seconds < 3:
+    if last_request and (now - last_request).seconds < 2:
         print(f'{now} - Suggestion blocked. User suggested `{suggestion}`.')
         response = web.json_response({
             'status': 'error',
