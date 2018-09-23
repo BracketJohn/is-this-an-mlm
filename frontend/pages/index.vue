@@ -109,7 +109,7 @@ export default {
         { hid: '1', property: 'og:type', content: 'article' },
         { hid: '2', property: 'og:url', content: 'http://www.isthisanmlm.com' },
         { hid: '3', property: 'og:image', content: `http://www.isthisanmlm.com/favicon.ico` },
-        { hid: '4', property: 'og:description', content: `Is the company X an MLM scheme? MLM schemes are scams.` },
+        { hid: '4', property: 'og:description', content: `Is the company X an MLM scheme? Here you can find out!` },
         { hid: '5', name: 'twitter:card', content: 'http://www.isthisanmlm.com/favicon.ico' },
         { hid: '6', name: 'twitter:title', content: 'Check whether a company is an MLM Scheme.' },
         { hid: '7', name: 'twitter:description', content: 'Is the company X an MLM scheme? Here you can find out!' },
