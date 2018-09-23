@@ -17,7 +17,8 @@
     "fast-levenshtein": "^2.0.6",
     "nuxt": "^1.0.0",
     "nuxt-buefy": "^0.2.3",
-    "nuxt-clipboard2": "^0.2.0"
+    "nuxt-clipboard2": "^0.2.0",
+    "vue-social-sharing": "^2.3.3"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

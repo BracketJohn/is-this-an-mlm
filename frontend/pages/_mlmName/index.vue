@@ -25,7 +25,7 @@
             <div v-if="companyName">
               <div v-if="isMlm">
                 <h1 class="is-size-2 has-text-danger">Yes!</h1>
-                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="https://mlmtruth.org/">MLM Truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
+                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="https://mlmtruth.org/">MLM Truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/antiMLM">this awesome subreddit</a> for information and help!</h2>
               </div>
               <div v-else>
                 <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
@@ -56,23 +56,40 @@
 
           </div>
         </div>
-        <!-- Fourth row - Add new MLM Button -->
+        <!-- Fourth row - Add new MLM Button/Share Button -->
+        <!-- Fourth row one - Add new MLM -->
         <div class="columns">
           <div class="column has-text-centered">
+            <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
+              Add "{{ companyName }}"
+            </button>
+          </div>
 
-            <div class="columns">
-              <div class="column has-text-centered">
-                <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
-                  Add "{{ companyName }}"
-                </button>
-                <div v-else-if="isMlm">
-                    <button @click="copyUrlToClipboard" class="button is-primary is-medium">
-                      Copy Link
-                    </button>
-                </div>
+        </div>
+        <!-- Fourth row two - Share MLM -->
+        <div class="columns" v-if="isMlm">
+          <div class="column has-text-centered">
+            <p class="is-size-3">Share results on:</p>
+          </div>
+        </div>
+        <div class="columns" v-if="isMlm">
+          <div @click="shareInform(shareTarget)" class="column has-text-centered" v-for="shareTarget in shareTargets" :key="shareTarget">
+
+            <social-sharing :url="getFullUrl()" inline-template>
+              <div>
+                <network :network="shareTarget.toLowerCase()">
+                  <button class="button is-primary is-medium">
+                  <i class="fa" :class="'fa-' + shareTarget.toLowerCase()"></i> {{ shareTarget }}
+                  </button>
+                </network>
               </div>
-            </div>
+            </social-sharing>
 
+          </div>
+          <div class="column has-text-centered">
+            <button @click="shareInform('copyLink');copyUrlToClipboard()" class="button is-primary is-medium">
+              Copy Link
+            </button>
           </div>
         </div>
 
@@ -92,12 +109,13 @@ import axios from 'axios';
 
 export default {
   methods: {
+    getFullUrl() {
+      return `http://www.isthisanmlm.com/${this.companyName}`;
+    },
     copyUrlToClipboard() {
-      let urlToCopy = `http://www.isthisanmlm.com/${this.companyName}`;
       let self = this;
 
-      this.$router.replace(this.companyName);
-      this.$copyText(urlToCopy)
+      this.$copyText(`http://www.isthisanmlm.com/${this.companyName}`)
         .then(function (response) {
           self.$toast.open({
               message: `Copied link to clipboard!`,
@@ -114,7 +132,7 @@ export default {
     suggestMlm() {
       let self = this;
       let compName = this.companyName;
-      axios.get(`http://www.isthisanmlm.com:8080/mlms/${compName}`)
+      axios.get(`http://www.isthisanmlm.com:8080/mlms/suggestion/${compName}`)
         .then(function (response) {
           if (response.data.status == 'success') {
             self.$toast.open({
@@ -136,6 +154,9 @@ export default {
         });
       this.companyName = '';
     },
+    shareInform(shareTarget) {
+      axios.get(`http://www.isthisanmlm.com:8080/mlms/shared/${shareTarget}`)
+    },
   },
   head () {
     return {
@@ -149,7 +170,11 @@ export default {
   },
   computed: {
     isMlm() {
-      return this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
+      let isMlmCompany  = this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
+      if (isMlmCompany){
+        this.$router.replace(this.companyName);
+      }
+      return isMlmCompany;
     },
     getSimilarCompanyNames() {
       let distances = [];
@@ -171,6 +196,12 @@ export default {
   },
   data: function() {
     return {
+      shareTargets: [
+        'Facebook',
+        'Twitter',
+        'Reddit',
+        'Whatsapp'
+      ],
       showSuggestionModal: false,
       companyName: this.$route.params.mlmName,
       knownMlms: [

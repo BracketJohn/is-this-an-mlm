@@ -22,23 +22,17 @@
         <div class="columns">
           <div class="column has-text-centered">
 
-            <div v-if="companyName">
-              <div v-if="isMlm">
-                <h1 class="is-size-2 has-text-danger">Yes!</h1>
-                <h2>Please check out <a href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>, <a href="https://mlmtruth.org/">MLM Truth</a>, <a href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or <a href="https://www.reddit.com/r/MLMRecovery">this awesome subreddit</a> for information and help!</h2>
-              </div>
-              <div v-else>
-                <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
-                  <span>Perhaps you meant:
-                    <nuxt-link :to="cn" v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
-                      <span @click="companyName = cn">{{ cn }}</span>
-                      <span v-if="index < getSimilarCompanyNames.length - 1">, </span>
-                    </nuxt-link>?
-                  </span>
-                </p>
-              </div>
+            <div v-if="companyName && !isMlm">
+              <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
+                <span>Perhaps you meant:
+                  <nuxt-link :to="cn" v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
+                    <span @click="companyName = cn">{{ cn }}</span>
+                    <span v-if="index < getSimilarCompanyNames.length - 1">, </span>
+                  </nuxt-link>?
+                </span>
+              </p>
             </div>
-            <div v-else class="column has-text-centered">
+            <div v-else-if="!companyName" class="column has-text-centered">
               <p class="is-size-4 is-size-6-mobile">Please type in a company name!</p>
             </div>
 
@@ -56,23 +50,12 @@
 
           </div>
         </div>
-        <!-- Fourth row - Add new MLM Button -->
+        <!-- Fourth row - Add new MLM -->
         <div class="columns">
           <div class="column has-text-centered">
-
-            <div class="columns">
-              <div class="column has-text-centered">
-                <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
-                  Add "{{ companyName }}"
-                </button>
-                <div v-else-if="isMlm">
-                    <button @click="copyUrlToClipboard" class="button is-primary is-medium">
-                      Copy Link
-                    </button>
-                </div>
-              </div>
-            </div>
-
+            <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
+              Add "{{ companyName }}"
+            </button>
           </div>
         </div>
 
@@ -92,29 +75,10 @@ import axios from 'axios';
 
 export default {
   methods: {
-    copyUrlToClipboard() {
-      let urlToCopy = `http://www.isthisanmlm.com/${this.companyName}`;
-      let self = this;
-
-      this.$router.replace(this.companyName);
-      this.$copyText(urlToCopy)
-        .then(function (response) {
-          self.$toast.open({
-              message: `Copied link to clipboard!`,
-              type: 'is-success'
-          });
-        })
-        .catch(function (error) {
-          self.$toast.open({
-              message: `Failed to copy link to clipboard!`,
-              type: 'is-danger'
-          });
-        });
-    },
     suggestMlm() {
       let self = this;
       let compName = this.companyName;
-      axios.get(`http://www.isthisanmlm.com:8080/mlms/${compName}`)
+      axios.get(`http://www.isthisanmlm.com:8080/mlms/suggestion/${compName}`)
         .then(function (response) {
           if (response.data.status == 'success') {
             self.$toast.open({
@@ -149,7 +113,11 @@ export default {
   },
   computed: {
     isMlm() {
-      return this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
+      let isMlmCompany  = this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
+      if (isMlmCompany){
+        this.$router.replace(this.companyName);
+      }
+      return isMlmCompany;
     },
     getSimilarCompanyNames() {
       let distances = [];

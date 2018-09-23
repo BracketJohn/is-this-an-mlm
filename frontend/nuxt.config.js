@@ -26,6 +26,9 @@ module.exports = {
     'nuxt-clipboard2',
     ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
+  plugins: [
+    { src: '~plugins/vue-social-sharing.js', ssr: true }
+  ],
   /*
   ** Build configuration
   */
@@ -42,7 +45,8 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    vendor: ['vue-social-sharing'],
   },
   env: {
     apiUrl: process.env.API_URL || 'http://www.isthisanmlm.com:8080/mlms',

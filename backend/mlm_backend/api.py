@@ -5,6 +5,7 @@ from aiohttp import web
 
 ALLOWED_ORIGINS = environ.get('ALLOWED_ORIGINS', '*')
 SUGGESTION_LOGS = 'suggestion.log'
+TIMES_SHARED = {}
 LAST_REQUEST = {}
 
 def submit_mlm(request):
@@ -31,7 +32,18 @@ def submit_mlm(request):
     return response
 
 
+def shared(request):
+    target, now = request.match_info['target'], datetime.now(tz=timezone.utc)
+    TIMES_SHARED[target] = TIMES_SHARED.get(target, 0) + 1
+    print(f'{now} - Now shared `{sum(TIMES_SHARED.values())}` times. Shares per target:\n{TIMES_SHARED}')
+
+    return web.json_response({
+        'status': 'success',
+    })
+
+
 def run():
     app = web.Application()
-    app.add_routes([web.get('/mlms/{name}', submit_mlm)])
+    app.add_routes([web.get('/mlms/suggestion/{name}', submit_mlm)])
+    app.add_routes([web.get('/mlms/shared/{target}', shared)])
     web.run_app(app)
