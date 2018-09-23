@@ -162,9 +162,15 @@ export default {
     return {
       title: `Is ${this.companyName} an MLM Scheme?`,
       meta: [
-        { hid: '0', property: 'og:title', content: `Is ${this.companyName} an MLM Scheme?` },
-        { hid: '1', property: 'og:image', content: `http://www.isthisanmlm.com/yes.png` },
-        { hid: '2', property: 'og:description', content: `Is the company ${this.companyName} an MLM scheme? MLM schemes are often scams.` }
+        { hid: '0', property: 'og:title', content: 'Check whether a company is an MLM Scheme.' },
+        { hid: '1', property: 'og:type', content: 'article' },
+        { hid: '2', property: 'og:url', content: `http://www.isthisanmlm.com/${this.companyName}` },
+        { hid: '3', property: 'og:image', content: `http://www.isthisanmlm.com/yes.png` },
+        { hid: '4', property: 'og:description', content: `Is the company ${this.companyName} an MLM scheme? Yes!` },
+        { hid: '5', name: 'twitter:card', content: 'http://www.isthisanmlm.com/yes.png' },
+        { hid: '6', name: 'twitter:title', content: 'Check whether a company is an MLM Scheme.' },
+        { hid: '7', name: 'twitter:description', content: `Is the company ${this.companyName} an MLM scheme? Yes!` },
+        { hid: '8', name: 'twitter:image:src', content: 'http://www.isthisanmlm.com/yes.png' },
       ]
     }
   },
