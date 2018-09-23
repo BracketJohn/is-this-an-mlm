@@ -139,11 +139,11 @@ export default {
   },
   head () {
     return {
-      title: `Is company X an MLM Scheme?`,
+      title: `Is this an MLM?`,
       meta: [
-        { hid: '0', property: 'og:title', content: 'Is company X an MLM Scheme?' },
+        { hid: '0', property: 'og:title', content: 'Check whether a company is an MLM Scheme.' },
         { hid: '1', property: 'og:image', content: `http://www.isthisanmlm.com/favicon.ico` },
-        { hid: '2', property: 'og:description', content: `Is the company X an MLM scheme? MLM schmes often prey on their members.` }
+        { hid: '2', property: 'og:description', content: `Is the company X an MLM scheme? MLM schemes are scams.` }
       ]
     }
   },

@@ -143,7 +143,7 @@ export default {
       meta: [
         { hid: '0', property: 'og:title', content: `Is ${this.companyName} an MLM Scheme?` },
         { hid: '1', property: 'og:image', content: `http://www.isthisanmlm.com/yes.png` },
-        { hid: '2', property: 'og:description', content: `Is the company ${this.companyName} an MLM scheme? MLM schmes often prey on their members.` }
+        { hid: '2', property: 'og:description', content: `Is the company ${this.companyName} an MLM scheme? MLM schemes are often scams.` }
       ]
     }
   },
