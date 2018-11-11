@@ -114,7 +114,6 @@ export default {
     },
     copyUrlToClipboard() {
       let self = this;
-
       this.$copyText(`http://www.isthisanmlm.com/${this.companyName}`)
         .then(function (response) {
           self.$toast.open({
