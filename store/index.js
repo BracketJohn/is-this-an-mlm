@@ -1,153 +1,6 @@
-<template>
-
-  <div>
-    <!-- Main Page Content. -->
-    <section class="hero">
-      <div class="hero-body">
-
-        <div class="columns is-multiline">
-          <div class="column is-one-third has-text-right has-text-centered-mobile">
-            <p class="is-size-3">Is</p>
-          </div>
-          <div class="column is-one-third has-text-centered">
-            <b-field>
-              <b-input size="is-large" placeholder="Company Name" v-model="companyName" rounded></b-input>
-            </b-field>
-          </div>
-          <div class="column has-text-left has-text-centered-mobile is-one-third">
-            <p class="is-size-3">an MLM?</p>
-          </div>
-        </div>
-        <!-- Second row - Yes/No text -->
-        <div class="columns">
-          <div class="column has-text-centered">
-
-            <div v-if="companyName && !isMlm">
-              <p class="is-size-5" v-if="getSimilarCompanyNames.length > 0">
-                <span>Perhaps you meant:
-                  <nuxt-link :to="cn" v-for="(cn, index) in getSimilarCompanyNames" :key="cn">
-                    <span @click="companyName = cn">{{ cn }}</span>
-                    <span v-if="index < getSimilarCompanyNames.length - 1">, </span>
-                  </nuxt-link>?
-                </span>
-              </p>
-            </div>
-            <div v-else-if="!companyName" class="column has-text-centered">
-              <p class="is-size-4 is-size-6-mobile">Please type in a company name!</p>
-            </div>
-
-          </div>
-        </div>
-        <!-- Third row - Add new MLM Text -->
-        <div class="columns">
-          <div class="column has-text-centered">
-
-            <div class="columns">
-              <div class="column has-text-centered is-size-6"  v-if="companyName && !isMlm">
-                Is this a new MLM you would like to add?
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <!-- Fourth row - Add new MLM -->
-        <div class="columns">
-          <div class="column has-text-centered">
-            <button class="button is-primary is-medium" v-if="companyName && !isMlm" @click="suggestMlm">
-              Add "{{ companyName }}"
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </section>
-    <section>
-
-    </section>
-
-  </div>
-
-</template>
-
-<script>
-const levenshtein = require('fast-levenshtein');
-import axios from 'axios';
-
-export default {
-  methods: {
-    suggestMlm() {
-      let self = this;
-      let compName = this.companyName;
-      axios.get(`http://www.isthisanmlm.com:8080/mlms/suggestion/${compName}`)
-        .then(function (response) {
-          if (response.data.status == 'success') {
-            self.$toast.open({
-                message: `"${compName}" was suggested!`,
-                type: 'is-success'
-            });
-          } else {
-            self.$toast.open({
-                message: `Too many suggestions!`,
-                type: 'is-danger'
-            });
-          }
-        })
-        .catch(function (error) {
-          self.$toast.open({
-              message: `Suggestion service is down.`,
-              type: 'is-danger'
-          });
-        });
-      this.companyName = '';
-    },
-  },
-  head () {
-    return {
-      title: `Is this an MLM?`,
-      meta: [
-        { hid: '0', property: 'og:title', content: 'Check whether a company is an MLM Scheme.' },
-        { hid: '1', property: 'og:type', content: 'article' },
-        { hid: '2', property: 'og:url', content: 'http://www.isthisanmlm.com' },
-        { hid: '3', property: 'og:image', content: `http://www.isthisanmlm.com/favicon.ico` },
-        { hid: '4', property: 'og:description', content: `Is the company X an MLM scheme? Here you can find out!` },
-        { hid: '5', name: 'twitter:card', content: 'http://www.isthisanmlm.com/favicon.ico' },
-        { hid: '6', name: 'twitter:title', content: 'Check whether a company is an MLM Scheme.' },
-        { hid: '7', name: 'twitter:description', content: 'Is the company X an MLM scheme? Here you can find out!' },
-        { hid: '8', name: 'twitter:image:src', content: 'http://www.isthisanmlm.com/favicon.ico' },
-      ]
-    }
-  },
-  computed: {
-    isMlm() {
-      let isMlmCompany  = this.knownMlms.indexOf(this.companyName.toLowerCase()) > -1;
-      if (isMlmCompany){
-        this.$router.replace(this.companyName);
-      }
-      return isMlmCompany;
-    },
-    getSimilarCompanyNames() {
-      let distances = [];
-      this.knownMlms.forEach(element => {
-        let distance = levenshtein.get(element, this.companyName);
-        distances.push({
-          name: element,
-          distance: distance
-        });
-      });
-      return distances.sort(function compare(compOne,compTwo) {
-        if (compOne.distance < compTwo.distance)
-          return -1;
-        if (compOne.distance > compTwo.distance)
-          return 1;
-        return 0;
-      }).slice(0, 3).filter(comp => comp.distance < 5).map(comp => comp.name);
-    }
-  },
-  data: function() {
-    return {
-      showSuggestionModal: false,
-      companyName: '',
-      knownMlms: [
+export const state = () => ({
+    isMLMDetected: false,
+    mlms: [
         'premier jewelry',
         'premier designs',
         'nutrilite',
@@ -697,8 +550,19 @@ export default {
         'zurvita',
         'zyia',
         'zyn'
-      ],
-    }
-  },
+    ],
+})
+
+export const mutations = {
+    setIsMLMDetected(state, value) {
+        state.isMLMDetected = value
+    },
 }
-</script>
+
+export const getters = {
+    getMLMs: state => state.mlms,
+    getIsMLMDetected: state => state.isMLMDetected
+}
+
+export const actions = {
+}
