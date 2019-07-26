@@ -59,53 +59,34 @@
                 Share results on:
             </div>
             <div class="flex flex-grow">
-                 <social-sharing url="https://vuejs.org/"
-                      title="The Progressive JavaScript Framework"
-                      description="Intuitive, Fast and Composable MVVM for building interactive interfaces."
-                      quote="Vue is a progressive framework for building user interfaces."
-                      hashtags="vuejs,javascript,framework"
-                      twitter-user="vuejs"
-                      inline-template>
-                <div>
-                    <network network="email">
-                        Email
-                    </network>
-                    <network network="facebook">
-                        Facebook
-                    </network>
-                    <network network="reddit">
-                        Reddit
-                    </network>
-                    <network network="sms">
-                        SMS
-                    </network>
-                    <network network="twitter">
-                        Twitter
-                    </network>
-                    <network network="whatsapp">
-                        Whatsapp
-                    </network>
+                <div @click="shareInform('facebook')">
+                    <no-ssr>
+                        <vue-goodshare-facebook title_social="Facebook" ></vue-goodshare-facebook>
+                    </no-ssr>
                 </div>
-                </social-sharing>
-
-                <div
-                    @click="shareInform(shareTarget)"
-                    class="rounded-lg shadow-bg bg-white mx-4 w-32 h-12 flex items-center justify-center hover:bg-gray-300 cursor-pointer"
-                    v-for="shareTarget in shareTargets" :key="shareTarget"
-                    >
-                    <social-sharing :url="fullURL" inline-template>
-                        <div>
-                            <network :network="shareTarget.toLowerCase()">
-                                    {{ shareTarget }}
-                            </network>
-                        </div>
-                    </social-sharing>
+                <div @click="shareInform('twitter')">
+                    <no-ssr>
+                        <vue-goodshare-twitter title_social="Twitter" ></vue-goodshare-twitter>
+                    </no-ssr>
                 </div>
-                <div class="rounded-lg shadow-bg bg-white mx-4 w-32 h-12 flex items-center justify-center hover:bg-gray-300 cursor-pointer">
-                    <button @click="shareInform('copyLink');copyUrlToClipboard()">
+                <div @click="shareInform('reddit')">
+                    <no-ssr>
+                        <vue-goodshare-reddit title_social="Reddit" ></vue-goodshare-reddit>
+                    </no-ssr>
+                </div>
+                <div @click="shareInform('whatsapp')">
+                    <no-ssr>
+                        <vue-goodshare-whatsapp title_social="Whatsapp" ></vue-goodshare-whatsapp>
+                    </no-ssr>
+                </div>
+                <div @click="shareInform('email')">
+                    <no-ssr>
+                        <vue-goodshare-email title_social="Email" ></vue-goodshare-email>
+                    </no-ssr>
+                </div>
+                <button class="rounded-sm bg-white w-20 h-10 flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="shareInform('copyLink');copyUrlToClipboard()">
                     Copy Link
-                    </button>
-                </div>
+                </button>
             </div>
         </div>
 

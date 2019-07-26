@@ -52,7 +52,7 @@ export default {
    */
   axios: {},
   plugins: [
-    { src: '~plugins/vue-social-sharing.js', ssr: true }
+    { src: '~plugins/vue-goodshare.js', ssr: true }
   ],
   /*
    ** Build configuration
