@@ -4,15 +4,20 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Is company X an MLM?',
     meta: [
+      { hid: '0', property: 'og:title', content: 'Check whether a company is an MLM Scheme.' },
+      { hid: '1', property: 'og:type', content: 'article' },
+      { hid: '2', property: 'og:url', content: 'https://isthisanmlm.com' },
+      { hid: '3', property: 'og:image', content: `https://isthisanmlm.com/favicon.ico` },
+      { hid: '4', property: 'og:description', content: `Is the company X an MLM scheme? Here you can find out!` },
+      { hid: '5', name: 'twitter:card', content: 'https://isthisanmlm.com/favicon.ico' },
+      { hid: '6', name: 'twitter:title', content: 'Check whether a company is an MLM Scheme.' },
+      { hid: '7', name: 'twitter:description', content: 'Is the company X an MLM scheme? Here you can find out!' },
+      { hid: '8', name: 'twitter:image:src', content: 'https://isthisanmlm.com/favicon.ico' },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
-      }
+      { hid: 'description', name: 'description', content: 'Website to determine whether a company is an mlm' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },

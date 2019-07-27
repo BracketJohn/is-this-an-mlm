@@ -22,10 +22,10 @@
             <div v-else-if="name.length > 0 && isThisAnMLM">
                 <p class="text-red text-4xl mt-8">Yes!</p>
                 <p class="text-xl">Please check out
-                    <a class="text-blue-600 underline" target="_blank" href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>,
-                    <a class="text-blue-600 underline" target="_blank" href="https://mlmtruth.org/">MLM Truth</a>,
-                    <a class="text-blue-600 underline" target="_blank" href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or
-                    <a class="text-blue-600 underline" target="_blank" href="https://www.reddit.com/r/antiMLM">this awesome subreddit</a>
+                    <a class="text-blue-600 underline" @click="shareInform('wikipedia_click')" target="_blank" href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>,
+                    <a class="text-blue-600 underline" @click="shareInform('mlmtruth_click')" target="_blank" href="https://mlmtruth.org/">MLM Truth</a>,
+                    <a class="text-blue-600 underline" @click="shareInform('youtube_click')" target="_blank" href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or
+                    <a class="text-blue-600 underline" @click="shareInform('reddit_click')" target="_blank" href="https://www.reddit.com/r/antiMLM">this awesome subreddit</a>
                 for information and help!</p>
             </div>
             <div  v-else-if="name.length > 0 && !isThisAnMLM">
@@ -58,35 +58,42 @@
             <div class="mb-5">
                 Share results on:
             </div>
-            <div class="flex flex-grow">
-                <div @click="shareInform('facebook')">
-                    <no-ssr>
-                        <vue-goodshare-facebook title_social="Facebook" ></vue-goodshare-facebook>
-                    </no-ssr>
+            <div class="flex flex-col flex-wrap flex-grow">
+                <!-- goodshare -->
+                <div class="flex flex-wrap justify-around">
+                    <div @click="shareInform('facebook_share')">
+                        <no-ssr>
+                            <vue-goodshare-facebook has_icon title_social="Facebook"></vue-goodshare-facebook>
+                        </no-ssr>
+                    </div>
+                    <div @click="shareInform('twitter_share')">
+                        <no-ssr>
+                            <vue-goodshare-twitter has_icon title_social="Twitter"></vue-goodshare-twitter>
+                        </no-ssr>
+                    </div>
+                    <div @click="shareInform('reddit_share')">
+                        <no-ssr>
+                            <vue-goodshare-reddit has_icon title_social="Reddit"></vue-goodshare-reddit>
+                        </no-ssr>
+                    </div>
+                    <div @click="shareInform('whatsapp_share')">
+                        <no-ssr>
+                            <vue-goodshare-whatsapp has_icon title_social="Whatsapp"></vue-goodshare-whatsapp>
+                        </no-ssr>
+                    </div>
+                    <div @click="shareInform('email_share')">
+                        <no-ssr>
+                            <vue-goodshare-email has_icon title_social="Email"></vue-goodshare-email>
+                        </no-ssr>
+                    </div>
                 </div>
-                <div @click="shareInform('twitter')">
-                    <no-ssr>
-                        <vue-goodshare-twitter title_social="Twitter" ></vue-goodshare-twitter>
-                    </no-ssr>
+
+                <!-- copy url -->
+                <div class="flex items-center justify-center">
+                    <button class="rounded-sm bg-white w-20 h-10 flex mt-4 items-center justify-center hover:bg-gray-300 cursor-pointer" @click="copy()">
+                        Copy Link
+                    </button>
                 </div>
-                <div @click="shareInform('reddit')">
-                    <no-ssr>
-                        <vue-goodshare-reddit title_social="Reddit" ></vue-goodshare-reddit>
-                    </no-ssr>
-                </div>
-                <div @click="shareInform('whatsapp')">
-                    <no-ssr>
-                        <vue-goodshare-whatsapp title_social="Whatsapp" ></vue-goodshare-whatsapp>
-                    </no-ssr>
-                </div>
-                <div @click="shareInform('email')">
-                    <no-ssr>
-                        <vue-goodshare-email title_social="Email" ></vue-goodshare-email>
-                    </no-ssr>
-                </div>
-                <button class="rounded-sm bg-white w-20 h-10 flex items-center justify-center hover:bg-gray-300 cursor-pointer" @click="shareInform('copyLink');copyUrlToClipboard()">
-                    Copy Link
-                </button>
             </div>
         </div>
 
@@ -107,6 +114,20 @@ export default {
         namePageWasCalledWith: {
             type: String,
             default: ''
+        }
+    },
+    head () {
+        return {
+            title: `Is ${this.name || 'company X'} an MLM? ${this.isThisAnMLM ? 'Yes' : 'No'}!`,
+            meta: [
+                {
+                    hid: 'description',
+                    name: 'description',
+                    content: (this.isThisAnMLM ?
+                                `The company ${this.name} is an MLM. MLMs are usually predatory in behavior and should be avioded at all cost! Please help any family memeber or friend in need by showing them this page.`
+                                : `Currently, ${this.name} is not a known MLM. If you think it is, please help this page by clicking 'Add ${this.name}' below.`)
+                }
+            ]
         }
     },
     data() {
@@ -131,7 +152,7 @@ export default {
             return _isMLM
         },
         fullURL() {
-            return `https://www.isthisanmlm.com/mlm/${this.name}`;
+            return `https://isthisanmlm.com/mlm/${this.name}`;
         },
         similarCompanyNames() {
             let distances = []
@@ -154,8 +175,24 @@ export default {
         },
     },
     methods: {
+        copy() {
+            this.shareInform('copyURL_share')
+
+            let self = this;
+            this.$copyText(`https://isthisanmlm.com/mlm/${this.name}`)
+                .then((response) => {
+                    self.$toast.success('Copied link to clipboard!')
+                })
+                .catch((error) => {
+                    self.$toast.error('Failed to copy link to clipboard!')
+            })
+        },
         updateMLMMode(isMLM) {
             this.$store.commit('setIsMLMDetected', isMLM)
+
+            if (isMLM) {
+                this.shareInform(`${this.name}_match`)
+            }
         },
         async suggestMLM() {
             const res = await this.$axios.post('/api/make-suggestion', {
@@ -179,16 +216,6 @@ export default {
         shareInform(target) {
             this.$axios.post('/api/shared', {
                 target: target
-            })
-        },
-        copyUrlToClipboard() {
-            let self = this;
-            this.$copyText(`http://www.isthisanmlm.com/mlm/${this.name}`)
-                .then((response) => {
-                    self.$toast.success('Copied link to clipboard!')
-                })
-                .catch((error) => {
-                    self.$toast.error('Failed to copy link to clipboard!')
             })
         },
     },
