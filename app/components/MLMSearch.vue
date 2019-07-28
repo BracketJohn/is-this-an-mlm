@@ -126,7 +126,9 @@ export default {
                     name: 'description',
                     content: (this.isThisAnMLM ?
                                 `The company ${this.name} is an MLM. MLMs are usually predatory in behavior and should be avioded at all cost! Please help any family memeber or friend in need by showing them this page.`
-                                : `Currently, ${this.name} is not a known MLM. If you think it is, please help this page by clicking 'Add ${this.name}' below.`)
+                                : (this.name ? `Currently, ${this.name} is not a known MLM. If you think it is, please help this page by clicking 'Add ${this.name}' below.`
+                                   : `Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.`)
+                             )
                 }
             ]
         }

@@ -21,7 +21,7 @@ export default {
       { hid: '8', name: 'twitter:image:src', content: 'https://isthisanmlm.com/favicon.ico' },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Website to determine whether a company is an mlm' }
+      { hid: 'description', name: 'description', content: 'Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.' }
     ],
     htmlAttrs: {
       lang: 'en'
