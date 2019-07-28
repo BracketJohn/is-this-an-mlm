@@ -52,6 +52,9 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/toast',
     'nuxt-clipboard2',
+    ['@nuxtjs/google-analytics', {
+      id: process.env.GOOGLE_ID || 'NOT_SUPPLIED'
+    }]
   ],
   toast: {
     position: 'top-right',
