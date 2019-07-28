@@ -1,6 +1,9 @@
 export const state = () => ({
     isMLMDetected: false,
     mlms: [
+        'modere',
+        'phatt',
+        'ph@tt',
         'farmasi',
         'PDXStudentWork',
         'premier jewelry',
