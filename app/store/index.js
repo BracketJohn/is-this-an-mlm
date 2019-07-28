@@ -1,6 +1,8 @@
 export const state = () => ({
     isMLMDetected: false,
     mlms: [
+        'farmasi',
+        'PDXStudentWork',
         'premier jewelry',
         'premier designs',
         'nutrilite',
@@ -133,6 +135,7 @@ export const state = () => ({
         'dynamic essentials',
         'ecowarehouse',
         'elepreneuer',
+        'elevacity',
         'elk river soaps',
         'ella tina',
         'elli kai',
