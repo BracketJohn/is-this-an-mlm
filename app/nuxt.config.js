@@ -46,7 +46,9 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    ['@nuxtjs/axios', {
+      baseURL: process.env.AXIOS_BASE_URL || 'https://isthisanmlm.com'
+    }],
     '@nuxtjs/eslint-module',
     '@nuxtjs/toast',
     'nuxt-clipboard2',
@@ -55,11 +57,6 @@ export default {
     position: 'top-right',
     duration: 3000,
   },
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
   plugins: [
     { src: '~plugins/vue-goodshare.js', ssr: true }
   ],
