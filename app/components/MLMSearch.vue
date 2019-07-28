@@ -5,6 +5,7 @@
         <div class="flex flex-col sm:flex-row items-center justify-center mt-12">
             <p class="text-4xl mr-4 sm:text-right">Is</p>
                 <input
+                    aria-label="Company Name"
                     type="text"
                     class="rounded-lg shadow-lg focus:shadow-outline border border-gray-300 py-2 sm:py-4 px-4"
                     placeholder="Company Name"
