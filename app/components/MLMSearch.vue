@@ -139,7 +139,19 @@ export default {
                 'Reddit',
                 'Whatsapp'
             ],
+            timerID: null,
         }
+    },
+    mounted() {
+        this.shareInform('_visitor')
+
+        let self = this
+        this.timerID = setInterval(() => {
+            self.shareInform(`${self.name || '__no_name'}_checked`)
+        }, 2000)
+    },
+    beforeDestroy() {
+        clearInterval(this.timerID)
     },
     computed: {
         ...mapGetters({
@@ -209,6 +221,7 @@ export default {
             this.name = ""
         },
         updateURL() {
+            this.shareInform(`${this.name || '__no_name'}_checked`)
             if (this.isThisAnMLM) {
                 this.$router.push(`/mlm/${this.name}`)
             }

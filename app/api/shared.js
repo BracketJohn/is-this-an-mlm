@@ -18,6 +18,20 @@ app.post('/', (req, res) => {
         })
     }
 
+    if (target.endsWith('_visitor')) {
+        let ip = '000.000.000'
+        if (req.headers['x-forwarded-for']) {
+            ip = req.headers['x-forwarded-for'].split(',').pop()
+        } else {
+            try {
+                ip =    (req.connection.remoteAddress ||
+                         req.socket.remoteAddress ||
+                         req.connection.socket.remoteAddress)
+            } catch (e) {}
+        }
+        console.log(`${new Date()} Visitor ${ip}`)
+    }
+
     res.json({
         status: 'success'
     })
@@ -29,6 +43,10 @@ app.post('/', (req, res) => {
         cnt.totalMatched = (cnt.totalMatched || 0) + 1
     } else if (target.endsWith('_click')) {
         cnt.totalClicked = (cnt.totalClicked || 0) + 1
+    } else if (target.endsWith('_visitor')) {
+        cnt.totalVisitor = (cnt.totalVisitor || 0) + 1
+    } else if (target.endsWith('_checked')) {
+        cnt.totalChecked = (cnt.totalChecked || 0) + 1
     } else {
         console.log(`Unknown target: ${target}`)
         cnt.totalUnknown = (cnt.totalUnknown || 0) + 1
