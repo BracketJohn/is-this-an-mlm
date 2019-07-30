@@ -21,4 +21,4 @@ dist
 __pycache__
 
 # suggestions
-suggestion.log
+*.log
