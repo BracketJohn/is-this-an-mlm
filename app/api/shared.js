@@ -40,6 +40,7 @@ app.post('/', (req, res) => {
     if (target.endsWith('_share')) {
         cnt.totalShared = (cnt.totalShared || 0) + 1
     } else if (target.endsWith('_match')) {
+        cnt[target] = (cnt[target] || 0) + 1
         cnt.totalMatched = (cnt.totalMatched || 0) + 1
     } else if (target.endsWith('_click')) {
         cnt.totalClicked = (cnt.totalClicked || 0) + 1
@@ -52,7 +53,6 @@ app.post('/', (req, res) => {
         cnt.totalUnknown = (cnt.totalUnknown || 0) + 1
     }
 
-    cnt[target] = (cnt[target] || 0) + 1
 
     fs.writeFile('share.log', `,\n${target}`, { flag: 'a+' }, (e) => {
         if (e) {
