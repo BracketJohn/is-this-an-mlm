@@ -555,7 +555,8 @@ export const state = () => ({
         'zrii',
         'zurvita',
         'zyia',
-        'zyn'
+        'zyn',
+        'ebiz'
     ],
 })
 
