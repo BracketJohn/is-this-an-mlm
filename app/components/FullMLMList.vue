@@ -6,9 +6,10 @@
         <p class="text-center">
             (MLMs are bad and fraudulent compnaies, please stay away from them!)
         </p>
-        <div v-for="mlm in mlms" :key="mlm" class="shadow-lg rounded-sm p-4 m-2 bg-white hover:bg-gray-200 cursor-default">
+        <div @click="goto(mlm)" v-for="mlm in mlms" :key="mlm" class="shadow-lg rounded-sm p-4 m-2 bg-white hover:bg-gray-200 cursor-pointer">
             {{ mlm }}
         </div>
+
     </div>
 </template>
 
@@ -26,6 +27,11 @@ export default {
         ...mapGetters({
             mlms: 'getMLMs'
         })
+    },
+    methods: {
+        goto(mlm) {
+            this.$router.push(`/mlm/${mlm}`)
+        }
     }
 }
 </script>

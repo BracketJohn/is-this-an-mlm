@@ -150,8 +150,8 @@ export default {
 
         let self = this
         this.timerID = setInterval(() => {
-            self.shareInform(`${self.name || '__no_name'}_checked`)
-        }, 2000)
+            self.shareInform(`__timer${self.name || '__no_name'}_checked`)
+        }, 20000)
     },
     beforeDestroy() {
         clearInterval(this.timerID)
