@@ -63,10 +63,6 @@ app.post('/', (req, res) => {
     console.log(`${curDate} Share event ${target} logged.`)
 })
 
-module.exports = {
-    getCount
-}
-
 export default {
   path: '/api/shared',
   handler: app,
