@@ -53,21 +53,21 @@ app.post('/', (req, res) => {
         cnt.totalUnknown = (cnt.totalUnknown || 0) + 1
     }
 
-
-    fs.writeFile('share.log', `,\n${target}`, { flag: 'a+' }, (e) => {
+    let curDate = new Date()
+    fs.writeFile('share.log', `,\n${curDate} - ${target}`, { flag: 'a+' }, (e) => {
         if (e) {
             console.log(`Error occured: ${e}`)
         }
     })
 
-    let shareString = ''
-    Object.keys(cnt).forEach(t => {
-        shareString += `${t}: ${cnt[t]}, `
-    })
-    console.log(`Event: '${target}': ${shareString}\n`)
+    console.log(`${curDate} Share event ${target} logged.`)
 })
+
+module.exports = {
+    getCount
+}
 
 export default {
   path: '/api/shared',
-  handler: app
+  handler: app,
 }

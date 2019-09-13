@@ -3,21 +3,21 @@
 
         <!-- Input -->
         <div class="flex flex-col sm:flex-row items-center justify-center mt-12">
-            <p class="text-4xl mr-4 sm:text-right">Is</p>
+            <p class="text-4xl mr-4 sm:text-right cursor-default">Is</p>
                 <input
                     aria-label="Company Name"
                     type="text"
-                    class="rounded-lg shadow-lg focus:shadow-outline border border-gray-300 py-2 sm:py-4 px-4"
+                    class="rounded-lg shadow-lg focus:shadow-outline border border-gray-300 py-2 sm:py-4 px-4 hover:bg-gray-200 hover:border-blue-400 focus:bg-white focus:shadow-outline focus:border-gray-300"
                     placeholder="Company Name"
                     v-model="name"
                     @blur="updateURL"
                     >
-            <p class="text-4xl ml-4 mt-1 sm:mt-1">an MLM?</p>
+            <p class="text-4xl ml-4 mt-1 sm:mt-1 cursor-default">an MLM?</p>
         </div>
 
         <!-- Result -->
         <div class="flex items-center justify-center mt-3 text-center">
-            <div v-if="name.length == 0" class="text-lg text-gray-800">
+            <div v-if="name.length == 0" class="text-lg text-gray-800 cursor-default">
                 (type in a company name above)
             </div>
             <div v-else-if="name.length > 0 && isThisAnMLM">
@@ -105,10 +105,10 @@
 
 <script>
 import Button from '~/components/Button'
+import { mapGetters } from 'vuex'
 
 const levenshtein = require('fast-levenshtein');
 
-import { mapGetters } from 'vuex'
 
 export default {
     props: {
