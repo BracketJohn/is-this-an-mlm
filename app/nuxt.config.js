@@ -1,8 +1,4 @@
 export default {
-  server: {
-    port: 3000,
-    host: process.env.BASE_URL || '0.0.0.0',
-  },
   /*
    ** Headers of the page
    */
