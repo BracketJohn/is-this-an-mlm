@@ -19,6 +19,7 @@ dist
 
 # python
 __pycache__
+Pipfile
 
 # suggestions
 suggestions

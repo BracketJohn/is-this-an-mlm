@@ -6,15 +6,19 @@
         <p class="text-center">
             (MLMs are bad and fraudulent compnaies, please stay away from them!)
         </p>
-        <div @click="goto(mlm)" v-for="mlm in allMLMs" :key="mlm" class="shadow-lg rounded-sm p-4 m-2 bg-white hover:bg-gray-200 cursor-pointer">
+        <div
+            @click="goto(mlm)"
+            v-for="mlm in allMLMs"
+            :key="mlm"
+            class="shadow-lg rounded-sm p-4 m-2 bg-white hover:bg-gray-200 cursor-pointer"
+        >
             {{ mlm }}
         </div>
-
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     props: {
@@ -24,14 +28,12 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'allMLMs'
-        ])
+        ...mapGetters(['allMLMs'])
     },
     methods: {
         goto(mlm) {
-            this.$router.push(`/mlm/${mlm}`)
+            this.$router.push(`/mlm/${mlm}`);
         }
     }
-}
+};
 </script>

@@ -1,13 +1,18 @@
 <template>
     <div class="min-h-screen flex flex-col">
-        <div class="flex-grow"
+        <div
+            class="flex-grow"
             :class="{
                 'bg-green-200': !isMLMDetected,
                 'bg-red-200': isMLMDetected
-            }">
+            }"
+        >
             <nuxt />
         </div>
-        <nuxt-link :to="footerRoute" class="h-12 bg-white w-full flex items-center justify-center hover:bg-gray-200 cursor-pointer fixed bottom-0 left-0">
+        <nuxt-link
+            :to="footerRoute"
+            class="h-12 bg-white w-full flex items-center justify-center hover:bg-gray-200 cursor-pointer fixed bottom-0 left-0"
+        >
             <p>
                 {{ footerText }}
             </p>
@@ -16,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     computed: {
@@ -24,22 +29,22 @@ export default {
             isMLMDetected: 'getIsMLMDetected'
         }),
         isIndex() {
-            return this.$route.path === '/'
+            return this.$route.path === '/';
         },
         footerRoute() {
             if (this.isIndex) {
-                return '/all-mlms'
+                return '/all-mlms';
             } else {
-                return '/'
+                return '/';
             }
         },
         footerText() {
             if (this.isIndex) {
-                return 'List of all MLMs'
+                return 'List of all MLMs';
             } else {
-                return 'Back to main page'
+                return 'Back to main page';
             }
         }
     }
-}
+};
 </script>
