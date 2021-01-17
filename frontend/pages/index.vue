@@ -7,7 +7,7 @@ import MLMSearch from '~/components/MLMSearch';
 
 export default {
     components: {
-        MLMSearch
-    }
+        MLMSearch,
+    },
 };
 </script>

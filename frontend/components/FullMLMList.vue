@@ -1,11 +1,7 @@
 <template>
     <div class="mx-auto w-full md:w-1/2 pb-12">
-        <div class="text-center text-2xl font-semibold">
-            All MLMs currently known to us:
-        </div>
-        <p class="text-center">
-            (MLMs are bad and fraudulent compnaies, please stay away from them!)
-        </p>
+        <div class="text-center text-2xl font-semibold">All MLMs currently known to us:</div>
+        <p class="text-center">(MLMs are bad and fraudulent compnaies, please stay away from them!)</p>
         <div
             @click="goto(mlm)"
             v-for="mlm in allMLMs"
@@ -24,16 +20,16 @@ export default {
     props: {
         currentSimilarCompanyNames: {
             type: String,
-            default: ''
-        }
+            default: '',
+        },
     },
     computed: {
-        ...mapGetters(['allMLMs'])
+        ...mapGetters(['allMLMs']),
     },
     methods: {
         goto(mlm) {
             this.$router.push(`/mlm/${mlm}`);
-        }
-    }
+        },
+    },
 };
 </script>

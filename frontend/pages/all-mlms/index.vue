@@ -7,7 +7,7 @@ import FullMLMList from '~/components/FullMLMList';
 
 export default {
     components: {
-        FullMLMList
-    }
+        FullMLMList,
+    },
 };
 </script>

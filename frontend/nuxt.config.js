@@ -5,10 +5,10 @@ export default {
     // Generate search machine crawlable static sub sites
     // for each MLM.
     generate: {
-        routes: mlms.map(mlm => `/mlm/${mlm}`)
+        routes: mlms.map(mlm => `/mlm/${mlm}`),
     },
     env: {
-        BACKEND_BASE_URL: process.env.BACKEND_BASE_URL
+        BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || 'https://isthisanmlm.com:8001',
     },
     /*
      ** Headers of the page
@@ -23,14 +23,14 @@ export default {
             {
                 hid: '4',
                 property: 'og:description',
-                content: `Is the company X an MLM scheme? Here you can find out!`
+                content: `Is the company X an MLM scheme? Here you can find out!`,
             },
             { hid: '5', name: 'twitter:card', content: 'https://isthisanmlm.com/favicon.ico' },
             { hid: '6', name: 'twitter:title', content: 'Check whether a company is an MLM Scheme.' },
             {
                 hid: '7',
                 name: 'twitter:description',
-                content: 'Is the company X an MLM scheme? Here you can find out!'
+                content: 'Is the company X an MLM scheme? Here you can find out!',
             },
             { hid: '8', name: 'twitter:image:src', content: 'https://isthisanmlm.com/favicon.ico' },
             { charset: 'utf-8' },
@@ -39,13 +39,13 @@ export default {
                 hid: 'description',
                 name: 'description',
                 content:
-                    'Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.'
-            }
+                    'Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.',
+            },
         ],
         htmlAttrs: {
-            lang: 'en'
+            lang: 'en',
         },
-        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+        link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
     /*
      ** Customize the progress-bar color
@@ -69,13 +69,13 @@ export default {
         [
             '@nuxtjs/google-analytics',
             {
-                id: process.env.GOOGLE_ID || 'NOT_SUPPLIED'
-            }
-        ]
+                id: process.env.GOOGLE_ID || 'NOT_SUPPLIED',
+            },
+        ],
     ],
     toast: {
         position: 'top-right',
-        duration: 3000
+        duration: 3000,
     },
 
     buildModules: ['@nuxtjs/tailwindcss'],
@@ -87,6 +87,6 @@ export default {
         /*
          ** You can extend webpack config here
          */
-        extend() {}
-    }
+        extend() {},
+    },
 };

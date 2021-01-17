@@ -8,11 +8,11 @@ import MLMSearch from '~/components/MLMSearch';
 export default {
     async asyncData({ params }) {
         return {
-            name: params.name
+            name: params.name,
         };
     },
     components: {
-        MLMSearch
-    }
+        MLMSearch,
+    },
 };
 </script>

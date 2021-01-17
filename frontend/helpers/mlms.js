@@ -555,5 +555,5 @@ export const mlms = [
     'zrii',
     'zurvita',
     'zyia',
-    'zyn'
+    'zyn',
 ];

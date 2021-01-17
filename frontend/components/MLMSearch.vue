@@ -55,9 +55,7 @@
                         <span v-if="index < similarCompanyNames.length - 1">, </span>
                     </nuxt-link>
                 </div>
-                <p class="text-md mt-10">
-                    Is this an MLM you would like to add?
-                </p>
+                <p class="text-md mt-10">Is this an MLM you would like to add?</p>
                 <div @click="suggestMLM">
                     <Button :text="`Add '${name}'`" class="mt-2 text-xl" />
                 </div>
@@ -66,9 +64,7 @@
 
         <!-- Buttons for sharing -->
         <div class="flex flex-col flex-grow flex-wrap items-center justify-center mt-16" v-if="isThisAnMLM">
-            <div class="mb-5">
-                Share results on:
-            </div>
+            <div class="mb-5">Share results on:</div>
             <div class="flex flex-col flex-wrap flex-grow">
                 <!-- goodshare -->
                 <div class="flex flex-wrap justify-around">
@@ -126,8 +122,8 @@ export default {
     props: {
         namePageWasCalledWith: {
             type: String,
-            default: ''
-        }
+            default: '',
+        },
     },
     head() {
         return {
@@ -140,16 +136,16 @@ export default {
                         ? `The company ${this.name} is an MLM. MLMs are usually predatory in behavior and should be avioded at all cost! Please help any family memeber or friend in need by showing them this page.`
                         : this.name
                         ? `Currently, ${this.name} is not a known MLM. If you think it is, please help this page by clicking 'Add ${this.name}' below.`
-                        : `Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.`
-                }
-            ]
+                        : `Website to determine whether a company is an MLM. Usually, so-called MLMs are predatory and in-fact pyramid schemes, that only allow you to earn money by recruiting people rather than by selling actual products.`,
+                },
+            ],
         };
     },
     data() {
         return {
             name: this.namePageWasCalledWith,
             shareTargets: ['Facebook', 'Twitter', 'Reddit', 'Whatsapp'],
-            timerID: null
+            timerID: null,
         };
     },
     beforeDestroy() {
@@ -171,7 +167,7 @@ export default {
             this.allMLMs.forEach(mlm => {
                 distances.push({
                     name: mlm,
-                    distance: levenshtein.get(mlm, this.name)
+                    distance: levenshtein.get(mlm, this.name),
                 });
             });
 
@@ -188,7 +184,7 @@ export default {
                 .slice(0, 3)
                 .filter(comp => comp.distance < 5)
                 .map(comp => comp.name);
-        }
+        },
     },
     methods: {
         copy() {
@@ -206,16 +202,16 @@ export default {
         },
         async suggestMLM() {
             const body = JSON.stringify({
-                name: this.name
+                name: this.name,
             });
 
             try {
                 await fetch(`${process.env.BACKEND_BASE_URL}/suggestion`, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
-                    body
+                    body,
                 });
             } catch (error) {
                 console.error(error);
@@ -230,10 +226,10 @@ export default {
             if (this.isThisAnMLM) {
                 this.$router.push(`/mlm/${this.name}`);
             }
-        }
+        },
     },
     components: {
-        Button
-    }
+        Button,
+    },
 };
 </script>

@@ -4,7 +4,7 @@
             class="flex-grow"
             :class="{
                 'bg-green-200': !isMLMDetected,
-                'bg-red-200': isMLMDetected
+                'bg-red-200': isMLMDetected,
             }"
         >
             <nuxt />
@@ -26,7 +26,7 @@ import { mapGetters } from 'vuex';
 export default {
     computed: {
         ...mapGetters({
-            isMLMDetected: 'getIsMLMDetected'
+            isMLMDetected: 'getIsMLMDetected',
         }),
         isIndex() {
             return this.$route.path === '/';
@@ -44,7 +44,7 @@ export default {
             } else {
                 return 'Back to main page';
             }
-        }
-    }
+        },
+    },
 };
 </script>

@@ -5,6 +5,9 @@
 # dependencies
 node_modules
 
+# eslint
+.eslintcache
+
 # logs
 npm-debug.log
 
