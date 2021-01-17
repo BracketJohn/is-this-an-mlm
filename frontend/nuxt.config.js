@@ -1,4 +1,15 @@
+import { mlms } from './helpers/mlms';
+
 export default {
+  target: 'static',
+  // Generate search machine crawlable static sub sites
+  // for each MLM.
+  generate: {
+    routes: mlms.map(mlm => `/mlm/${mlm}`)
+  },
+  env: {
+    BACKEND_BASE_URL: process.env.BACKEND_BASE_URL
+  },
   /*
    ** Headers of the page
    */
@@ -23,10 +34,6 @@ export default {
     },
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
-  serverMiddleware: [
-    '~/api/make-suggestion',
-    '~/api/shared',
-  ],
   /*
    ** Customize the progress-bar color
    */

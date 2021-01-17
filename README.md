@@ -15,11 +15,4 @@ Install `docker` and `docker-compose`. Then run:
 
 ## Development
 
-Install `npm` and `node`, then run:
-```sh
-> cd app
-> npm i
-> npm run dev
-```
-
-to start the application in development mode.
+For development instructions, please have a look at the `README.md`s in each individual service directory.

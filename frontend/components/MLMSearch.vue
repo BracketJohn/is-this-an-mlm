@@ -23,10 +23,10 @@
             <div v-else-if="name.length > 0 && isThisAnMLM">
                 <p class="text-red text-4xl mt-8">Yes!</p>
                 <p class="text-xl">Please check out
-                    <a class="text-blue-600 underline" @click="shareInform('wikipedia_click')" target="_blank" href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>,
-                    <a class="text-blue-600 underline" @click="shareInform('mlmtruth_click')" target="_blank" href="https://mlmtruth.org/">MLM Truth</a>,
-                    <a class="text-blue-600 underline" @click="shareInform('youtube_click')" target="_blank" href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or
-                    <a class="text-blue-600 underline" @click="shareInform('reddit_click')" target="_blank" href="https://www.reddit.com/r/antiMLM">this awesome subreddit</a>
+                    <a class="text-blue-600 underline" target="_blank" href="https://en.wikipedia.org/wiki/Multi-level_marketing">Wikipedia</a>,
+                    <a class="text-blue-600 underline" target="_blank" href="https://mlmtruth.org/">MLM Truth</a>,
+                    <a class="text-blue-600 underline" target="_blank" href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be">John Oliver's video</a> or
+                    <a class="text-blue-600 underline" target="_blank" href="https://www.reddit.com/r/antiMLM">this awesome subreddit</a>
                 for information and help!</p>
             </div>
             <div  v-else-if="name.length > 0 && !isThisAnMLM">
@@ -62,27 +62,27 @@
             <div class="flex flex-col flex-wrap flex-grow">
                 <!-- goodshare -->
                 <div class="flex flex-wrap justify-around">
-                    <div @click="shareInform('facebook_share')">
+                    <div>
                         <no-ssr>
                             <vue-goodshare-facebook has_icon title_social="Facebook"></vue-goodshare-facebook>
                         </no-ssr>
                     </div>
-                    <div @click="shareInform('twitter_share')">
+                    <div>
                         <no-ssr>
                             <vue-goodshare-twitter has_icon title_social="Twitter"></vue-goodshare-twitter>
                         </no-ssr>
                     </div>
-                    <div @click="shareInform('reddit_share')">
+                    <div>
                         <no-ssr>
                             <vue-goodshare-reddit has_icon title_social="Reddit"></vue-goodshare-reddit>
                         </no-ssr>
                     </div>
-                    <div @click="shareInform('whatsapp_share')">
+                    <div>
                         <no-ssr>
                             <vue-goodshare-whatsapp has_icon title_social="Whatsapp"></vue-goodshare-whatsapp>
                         </no-ssr>
                     </div>
-                    <div @click="shareInform('email_share')">
+                    <div>
                         <no-ssr>
                             <vue-goodshare-email has_icon title_social="Email"></vue-goodshare-email>
                         </no-ssr>
@@ -145,33 +145,26 @@ export default {
             timerID: null,
         }
     },
-    mounted() {
-        this.shareInform('_visitor')
-
-        let self = this
-        this.timerID = setInterval(() => {
-            self.shareInform(`__timer${self.name || '__no_name'}_checked`)
-        }, 20000)
-    },
     beforeDestroy() {
         clearInterval(this.timerID)
     },
     computed: {
-        ...mapGetters({
-            mlms: 'getMLMs'
-        }),
+        ...mapGetters([
+            'allMLMs',
+            'isMLMInList'
+        ]),
         isThisAnMLM() {
-            let _isMLM = (this.name.length > 0) && (this.mlms.indexOf(this.name.toLowerCase()) > -1)
+            const isNameAnMLM = this.isMLMInList(this.name)
 
-            this.updateMLMMode(_isMLM)
-            return _isMLM
+            this.updateMLMMode(isNameAnMLM)
+            return isNameAnMLM
         },
         fullURL() {
             return `https://isthisanmlm.com/mlm/${this.name}`;
         },
         similarCompanyNames() {
             let distances = []
-            this.mlms.forEach(mlm => {
+            this.allMLMs.forEach(mlm => {
                 distances.push({
                     name: mlm,
                     distance: levenshtein.get(mlm, this.name)
@@ -191,8 +184,6 @@ export default {
     },
     methods: {
         copy() {
-            this.shareInform('copyURL_share')
-
             let self = this;
             this.$copyText(`https://isthisanmlm.com/mlm/${this.name}`)
                 .then((response) => {
@@ -203,52 +194,15 @@ export default {
             })
         },
         updateMLMMode(isMLM) {
-            this.$store.commit('setIsMLMDetected', isMLM)
-
-            if (isMLM) {
-                this.shareInform(`${this.name}_match`)
-            }
+            this.$store.commit('setIsMLMDetected', isMLM);
         },
         async suggestMLM() {
             const body = JSON.stringify({
                 name: this.name
             });
 
-            let data;
             try {
-                data = await fetch('/api/make-suggestion', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body
-                }).then(response => response.json());
-            } catch (error) {
-                this.$toast.error('Failed to make suggestion due to network problems.')
-                return;
-            }
-
-            let { status } = data;
-            if (status == 'success') {
-                this.$toast.success('Suggestion made, thanks!')
-            } else {
-                this.$toast.error('Failed to make suggestion, please try again later.')
-            }
-
-            this.name = ""
-        },
-        updateURL() {
-            this.shareInform(`${this.name || '__no_name'}_checked`)
-            if (this.isThisAnMLM) {
-                this.$router.push(`/mlm/${this.name}`)
-            }
-        },
-        shareInform(target) {
-            const body = JSON.stringify({
-                target
-            })
-            try {
-                fetch('/api/shared', {
+                await fetch(`${process.env.BACKEND_BASE_URL}/suggestion`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -256,9 +210,18 @@ export default {
                     body
                 });
             } catch (error) {
-                console.error('Error reporting share', error);
+                console.log(error)
+                this.$toast.error('Failed to make suggestion, please try again later')
+                return;
             }
 
+            this.$toast.success('Suggestion made, thanks!')
+            this.name = ""
+        },
+        updateURL() {
+            if (this.isThisAnMLM) {
+                this.$router.push(`/mlm/${this.name}`)
+            }
         },
     },
     components: {

@@ -1,10 +1,17 @@
 version: "3"
 services:
+  backend:
+    build:
+      context: ./backend
+    restart: always
+    ports:
+      - "8001:8001"
   webapp:
     build:
-      context: ./app
+      context: ./frontend
     restart: always
     ports:
       - "80:3000"
     environment:
       - GOOGLE_ID=${GOOGLE_ID}
+      - BACKED_BASE_URL="${BACKED_BASE_URL:-https://isthisanmlm.com:8001}"
