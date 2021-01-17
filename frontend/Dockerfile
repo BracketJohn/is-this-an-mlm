@@ -1,4 +1,4 @@
-FROM node:14 AS dependency-base
+FROM node:14-alpine AS dependency-base
 
 # Create app directory
 RUN mkdir /app
