@@ -64,19 +64,17 @@ export default {
   plugins: [
     { src: '~plugins/vue-goodshare.js', ssr: true }
   ],
+
+  buildModules: ['@nuxtjs/tailwindcss'],
+
   /*
    ** Build configuration
    */
   build: {
-    postcss: {
-      plugins: {
-        tailwindcss: './tailwind.config.js'
-      }
-    },
+
     /*
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
-    vendor: ['vue-social-sharing'],
   }
 }

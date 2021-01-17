@@ -10,9 +10,10 @@ from pydantic import BaseModel
 import uvicorn
 
 _LOGGER = logging.getLogger(__name__)
-
+_SUGGESTIONS_FOLDER = '/suggestions'
 app = FastAPI()
 origins = [
+    "http://localhost",
     "http://localhost:3000",
     "https://isthisanmlm.com",
 ]
@@ -36,8 +37,8 @@ async def make_suggestion(suggestion: Suggestion) -> None:
     name = suggestion.name
 
     _LOGGER.info('Suggestion was made', extra={'suggestion': suggestion})
-    with open('suggestions.log', 'a') as target:
-        target.write(f'{now};{name}')
+    with open(f'/{_SUGGESTIONS_FOLDER}/suggestions.log', 'a') as target:
+        target.write(f'{now};{name}\n')
 
 
 def run(host: str, port: int, with_hot_reload: bool = False) -> None:

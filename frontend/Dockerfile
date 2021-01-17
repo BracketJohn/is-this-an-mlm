@@ -9,11 +9,7 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm ci
 
-FROM dependency-base AS production
-
-# Copy over app content, build
-COPY . .
-RUN npm run build
+FROM dependency-base AS production-raw
 
 # Configure nuxt environment
 ENV NODE_ENV production
@@ -27,5 +23,11 @@ ENV BACKEND_BASE_URL=${BACKEND_BASE_URL}
 # Configure other environment settings
 ARG GOOGLE_ID
 ENV GOOGLE_ID=${GOOGLE_ID}
+
+FROM production-raw AS production
+
+# Copy over app content, build
+COPY . .
+RUN npm run generate
 
 CMD ["npm", "run", "start"]

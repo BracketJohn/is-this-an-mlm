@@ -13,6 +13,6 @@ export const mutations = {
 
 export const getters = {
     allMLMs: state => state.allMLMs,
-    isMLMInList: state => name => !!name && state.allMLMs.includes(name.toLowerCase()),
+    isMLMInList: (state, getters) => name => !!name && getters.allMLMs.includes(name.toLowerCase()),
     getIsMLMDetected: state => state.isMLMDetected
 }
