@@ -5,6 +5,9 @@
 # dependencies
 node_modules
 
+# eslint
+.eslintcache
+
 # logs
 npm-debug.log
 
@@ -19,6 +22,9 @@ dist
 
 # python
 __pycache__
+Pipfile
+.coverage
 
 # suggestions
-*.log
+suggestions
+suggestions.log

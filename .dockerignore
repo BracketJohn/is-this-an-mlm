@@ -1,8 +1,0 @@
-# docker
-docker-compose.yaml
-Dockerfile
-
-# project
-.nuxt
-node_modules
-*.log

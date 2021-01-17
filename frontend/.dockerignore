@@ -1,0 +1,7 @@
+# docker
+Dockerfile
+
+# project
+.nuxt
+node_modules
+*.log
