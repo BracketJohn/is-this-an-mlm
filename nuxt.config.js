@@ -1,5 +1,4 @@
 export default {
-  mode: 'universal',
   server: {
     port: 3000,
     host: process.env.BASE_URL || '0.0.0.0',
