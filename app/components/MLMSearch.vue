@@ -210,15 +210,29 @@ export default {
             }
         },
         async suggestMLM() {
-            const res = await this.$axios.post('/api/make-suggestion', {
+            const body = JSON.stringify({
                 name: this.name
-            })
+            });
 
-            let { status } = res.data
+            let data;
+            try {
+                data = await fetch('/api/make-suggestion', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body
+                }).then(response => response.json());
+            } catch (error) {
+                this.$toast.error('Failed to make suggestion due to network problems.')
+                return;
+            }
+
+            let { status } = data;
             if (status == 'success') {
                 this.$toast.success('Suggestion made, thanks!')
             } else {
-                this.$toast.error('Failed to make suggestion!')
+                this.$toast.error('Failed to make suggestion, please try again later.')
             }
 
             this.name = ""
@@ -230,9 +244,21 @@ export default {
             }
         },
         shareInform(target) {
-            this.$axios.post('/api/shared', {
-                target: target
+            const body = JSON.stringify({
+                target
             })
+            try {
+                fetch('/api/shared', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body
+                });
+            } catch (error) {
+                console.error('Error reporting share', error);
+            }
+
         },
     },
     components: {

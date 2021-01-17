@@ -43,10 +43,6 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    ['@nuxtjs/axios', {
-      baseURL: process.env.AXIOS_BASE_URL || 'https://isthisanmlm.com'
-    }],
     '@nuxtjs/eslint-module',
     '@nuxtjs/toast',
     'nuxt-clipboard2',
