@@ -12,23 +12,25 @@ import uvicorn
 _LOGGER = logging.getLogger(__name__)
 _SUGGESTIONS_FOLDER = '/suggestions'
 app = FastAPI()
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "https://isthisanmlm.com",
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        'http://localhost',
+        'http://localhost:3000',
+        'https://isthisanmlm.com',
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
 
 
 class Suggestion(BaseModel):
+    """End-user MLM suggestion."""
+
     name: str
+
 
 @app.post('/suggestion')
 async def make_suggestion(suggestion: Suggestion) -> None:
@@ -38,6 +40,7 @@ async def make_suggestion(suggestion: Suggestion) -> None:
 
     _LOGGER.info('Suggestion was made', extra={'suggestion': suggestion})
     with open(f'/{_SUGGESTIONS_FOLDER}/suggestions.log', 'a') as target:
+        # TODO: Sanitize before dumping to file
         target.write(f'{now};{name}\n')
 
 
