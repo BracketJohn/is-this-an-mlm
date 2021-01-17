@@ -2,7 +2,7 @@ version: "3"
 services:
   webapp:
     build:
-      context: .
+      context: ./app
     restart: always
     ports:
       - "80:3000"

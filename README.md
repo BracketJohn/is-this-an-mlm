@@ -1,22 +1,25 @@
 # is-this-an-mlm
 
-> Website to determine whether a company is an mlm
+Website to determine whether a company is an mlm. It currently runs [here](https://isthisanmlm.com) and is referenced by multiple websites, videos and people as a help to determine whether a company is a multilevel marketing (MLM) company.
 
-## Build Setup
+Multilevel marketing companies often prey on their members. I decided to create this site as a help for the community in order to tackle these harmful schemes. It is developed out in the open to keep it open and transparent.
 
-``` bash
-# install dependencies
-$ npm run install
+The main source of MLMs is the `antiMLM` reddit community and the visitors of the page themselves (as they can submit companies by themselves).
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+## Deployment
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+Install `docker` and `docker-compose`. Then run:
+```sh
+> docker-compose up
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+## Development
+
+Install `npm` and `node`, then run:
+```sh
+> cd app
+> npm i
+> npm run dev
+```
+
+to start the application in development mode.
