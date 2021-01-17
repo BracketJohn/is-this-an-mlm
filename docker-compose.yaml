@@ -1,0 +1,10 @@
+version: "3"
+services:
+  webapp:
+    build:
+      context: .
+    restart: always
+    ports:
+      - "80:3000"
+    environment:
+      - GOOGLE_ID=${GOOGLE_ID}
