@@ -4,16 +4,20 @@ services:
     build:
       context: ./backend
     restart: always
-    ports:
-      - "8001:8001"
     volumes:
       - ./suggestions:/suggestions
   webapp:
     build:
       context: ./frontend
       args:
-        - BACKEND_BASE_URL=${BACKEND_BASE_URL-https://isthisanmlm.com:8001}
         - GOOGLE_ID=${GOOGLE_ID}
     restart: always
+  proxy:
+    image: pottava/proxy
     ports:
-      - "80:3000"
+        - 80:80
+    links:
+        - webapp
+        - backend
+    environment:
+        - PROXY_PATTERNS="/api/*=http://backend:8001/,*=http://webapp:3000/"

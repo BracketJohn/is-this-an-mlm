@@ -10,9 +10,4 @@ Install `npm` and `node`, then run:
 > npm run dev
 ```
 
-to start the application in development mode.
-
-In order to set the backend base url, export:
-```sh
-> export BACKEND_BASE_URL=your_desired_base_url
-```
+to start the application in development mode. Export the environment variable `BACKEND_BASE_URL` to talk to a different origin backend (e.g., `localhost:8001` of the backend API).

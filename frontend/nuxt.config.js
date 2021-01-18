@@ -1,6 +1,7 @@
 import { mlms } from './helpers/mlms';
 
 export default {
+    ssr: false,
     target: 'static',
     // Generate search machine crawlable static sub sites
     // for each MLM.
@@ -8,7 +9,7 @@ export default {
         routes: mlms.map(mlm => `/mlm/${mlm}`),
     },
     env: {
-        BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || 'https://isthisanmlm.com:8001',
+        BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || '',
     },
     /*
      ** Headers of the page
@@ -74,7 +75,6 @@ export default {
         ],
     ],
     toast: {
-        position: 'top-right',
         duration: 3000,
     },
 

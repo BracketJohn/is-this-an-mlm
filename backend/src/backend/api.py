@@ -33,7 +33,7 @@ class Suggestion(BaseModel):
     name: str
 
 
-@app.post('/suggestion')
+@app.post('/api/suggestion')
 async def make_suggestion(suggestion: Suggestion) -> None:
     """Enqueue random palturai company ids."""
     now = datetime.datetime.now(tz=datetime.timezone.utc)

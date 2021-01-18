@@ -68,31 +68,11 @@
             <div class="flex flex-col flex-wrap flex-grow">
                 <!-- goodshare -->
                 <div class="flex flex-wrap justify-around">
-                    <div>
-                        <no-ssr>
-                            <vue-goodshare-facebook has_icon title_social="Facebook"></vue-goodshare-facebook>
-                        </no-ssr>
-                    </div>
-                    <div>
-                        <no-ssr>
-                            <vue-goodshare-twitter has_icon title_social="Twitter"></vue-goodshare-twitter>
-                        </no-ssr>
-                    </div>
-                    <div>
-                        <no-ssr>
-                            <vue-goodshare-reddit has_icon title_social="Reddit"></vue-goodshare-reddit>
-                        </no-ssr>
-                    </div>
-                    <div>
-                        <no-ssr>
-                            <vue-goodshare-whatsapp has_icon title_social="Whatsapp"></vue-goodshare-whatsapp>
-                        </no-ssr>
-                    </div>
-                    <div>
-                        <no-ssr>
-                            <vue-goodshare-email has_icon title_social="Email"></vue-goodshare-email>
-                        </no-ssr>
-                    </div>
+                    <vue-goodshare-facebook has_icon title_social="Facebook" />
+                    <vue-goodshare-twitter has_icon title_social="Twitter" />
+                    <vue-goodshare-reddit has_icon title_social="Reddit" />
+                    <vue-goodshare-whatsapp has_icon title_social="Whatsapp" />
+                    <vue-goodshare-email has_icon title_social="Email" />
                 </div>
 
                 <!-- copy url -->
@@ -144,12 +124,7 @@ export default {
     data() {
         return {
             name: this.namePageWasCalledWith,
-            shareTargets: ['Facebook', 'Twitter', 'Reddit', 'Whatsapp'],
-            timerID: null,
         };
-    },
-    beforeDestroy() {
-        clearInterval(this.timerID);
     },
     computed: {
         ...mapGetters(['allMLMs', 'isMLMInList']),
@@ -188,8 +163,9 @@ export default {
     },
     methods: {
         copy() {
+            const urlToCopy = `https://isthisanmlm.com/mlm/${this.name}`;
             const self = this;
-            this.$copyText(`https://isthisanmlm.com/mlm/${this.name}`)
+            this.$copyText(urlToCopy)
                 .then(() => {
                     self.$toast.success('Copied link to clipboard!');
                 })
@@ -206,7 +182,7 @@ export default {
             });
 
             try {
-                await fetch(`${process.env.BACKEND_BASE_URL}/suggestion`, {
+                await fetch(`${process.env.BACKEND_BASE_URL}/api/suggestion`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
