@@ -6,10 +6,11 @@
             <input
                 aria-label="Company Name"
                 type="text"
-                class="rounded-lg shadow-lg focus:shadow-outline border border-gray-300 py-2 sm:py-4 px-4 hover:bg-gray-200 hover:border-blue-400 focus:bg-white focus:shadow-outline focus:border-gray-300"
+                class="rounded-lg shadow-lg border border-gray-300 py-2 sm:py-4 px-4 hover:bg-gray-200 hover:border-blue-400 focus:bg-white focus:shadow-outline focus:border-gray-300"
                 placeholder="Company Name"
                 v-model="name"
                 @blur="updateURL"
+                autofocus
             />
             <p class="text-4xl ml-4 mt-1 sm:mt-1 cursor-default">an MLM?</p>
         </div>
@@ -23,22 +24,11 @@
                 <p class="text-red text-4xl mt-8">Yes!</p>
                 <p class="text-xl">
                     Please check out
-                    <a
-                        class="text-blue-600 underline"
-                        target="_blank"
-                        href="https://en.wikipedia.org/wiki/Multi-level_marketing"
-                        >Wikipedia</a
-                    >, <a class="text-blue-600 underline" target="_blank" href="https://mlmtruth.org/">MLM Truth</a>,
-                    <a
-                        class="text-blue-600 underline"
-                        target="_blank"
-                        href="https://www.youtube.com/watch?v=s6MwGeOm8iI&feature=youtu.be"
-                        >John Oliver's video</a
-                    >
+                    <external-url text="Wikipedia" href="https://en.wikipedia.org/wiki/Multi-level_marketing" />,
+                    <external-url text="MLM Truth" href="https://mlmtruth.org/" />,
+                    <external-url text="John Oliver's video" href="https://www.youtube.com/watch?v=s6MwGeOm8iI" />
                     or
-                    <a class="text-blue-600 underline" target="_blank" href="https://www.reddit.com/r/antiMLM"
-                        >this awesome subreddit</a
-                    >
+                    <external-url text="this awesome subreddit" href="https://www.reddit.com/r/antiMLM" />
                     for information and help!
                 </p>
             </div>
@@ -87,6 +77,19 @@
             </div>
         </div>
 
+        <!-- Support -->
+        <div class="flex flex-col flex-grow flex-wrap items-center justify-center mt-16" v-if="isThisAnMLM">
+            <div class="mb-2">
+                Has this site helped you and you want to support its hosting, maintanence and development?
+            </div>
+            <div>
+                Consider
+                <external-url text="supporting this website with a donation" :href="donationURL" />
+                or
+                <external-url text="creating a feature request, giving feedback" :href="feedbackURL" />
+            </div>
+        </div>
+
         <!-- Reserved/Spacing -->
         <div class="flex-grow"></div>
     </div>
@@ -94,6 +97,7 @@
 
 <script>
 import Button from '~/components/Button';
+import externalUrl from '~/components/externalUrl';
 import { mapGetters } from 'vuex';
 
 const levenshtein = require('fast-levenshtein');
@@ -124,6 +128,8 @@ export default {
     data() {
         return {
             name: this.namePageWasCalledWith,
+            donationURL: process.env.DONATION_URL,
+            feedbackURL: process.env.FEEDBACK_URL,
         };
     },
     computed: {
@@ -206,6 +212,7 @@ export default {
     },
     components: {
         Button,
+        externalUrl,
     },
 };
 </script>

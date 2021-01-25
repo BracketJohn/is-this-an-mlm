@@ -10,6 +10,8 @@ export default {
     },
     env: {
         BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || '',
+        FEEDBACK_URL: process.env.FEEDBACK_URL || '',
+        DONATION_URL: process.env.DONATION_URL || '',
     },
     /*
      ** Headers of the page

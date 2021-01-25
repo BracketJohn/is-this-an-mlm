@@ -11,6 +11,8 @@ services:
       context: ./frontend
       args:
         - GOOGLE_ID=${GOOGLE_ID}
+        - FEEDBACK_URL=${FEEDBACK_URL}
+        - DONATION_URL=${DONATION_URL}
     restart: always
   proxy:
     image: pottava/proxy
