@@ -24,11 +24,11 @@
                 <p class="text-red text-4xl mt-8">Yes!</p>
                 <p class="text-xl">
                     Please check out
-                    <external-URL text="Wikipedia" href="https://en.wikipedia.org/wiki/Multi-level_marketing" />,
-                    <external-URL text="MLM Truth" href="https://mlmtruth.org/" />,
-                    <external-URL text="John Oliver's video" href="https://www.youtube.com/watch?v=s6MwGeOm8iI" />
+                    <external-url text="Wikipedia" href="https://en.wikipedia.org/wiki/Multi-level_marketing" />,
+                    <external-url text="MLM Truth" href="https://mlmtruth.org/" />,
+                    <external-url text="John Oliver's video" href="https://www.youtube.com/watch?v=s6MwGeOm8iI" />
                     or
-                    <external-URL text="this awesome subreddit" href="https://www.reddit.com/r/antiMLM" />
+                    <external-url text="this awesome subreddit" href="https://www.reddit.com/r/antiMLM" />
                     for information and help!
                 </p>
             </div>
@@ -84,9 +84,9 @@
             </div>
             <div>
                 Consider
-                <external-URL text="supporting this website with a donation" :href="donationURL" />
+                <external-url text="supporting this website with a donation" :href="donationURL" />
                 or
-                <external-URL text="creating a feature request, giving feedback" :href="feedbackURL" />
+                <external-url text="creating a feature request, giving feedback" :href="feedbackURL" />
             </div>
         </div>
 
@@ -97,7 +97,7 @@
 
 <script>
 import Button from '~/components/Button';
-import externalURL from '~/components/externalURL';
+import externalUrl from '~/components/externalUrl';
 import { mapGetters } from 'vuex';
 
 const levenshtein = require('fast-levenshtein');
@@ -212,7 +212,7 @@ export default {
     },
     components: {
         Button,
-        externalURL,
+        externalUrl,
     },
 };
 </script>
